@@ -16,11 +16,11 @@ void quaility_hander (char *h_device, char *w_device, char *qualities_mpd){
 //	char temp[100]="";
 	int i = 0;
 	char *qualities[10];
-//	char *resolution_to_check[2];
-//	char *bitrate_to_check[0];
+	char *resolution_to_check[2];
+	char *bitrate_to_check[0];
 	int number_qualities = 0;
-//	char *token_w,*token_h;
-//	int  with,height;
+	char *token_w,*token_h;
+	int  with,height;
 //
 //	printf("--asi---\n");
 //
@@ -52,24 +52,24 @@ void quaility_hander (char *h_device, char *w_device, char *qualities_mpd){
 		printf("%s\n", qualities[i]);
 	printf("-----\n");
 //
-//	resolution_to_check[0] = strtok (qualities[0], "_");
+	resolution_to_check[0] = strtok (qualities[0], "_");
 //
-//	printf("%s\n", resolution_to_check[0]);
-//
-//	/* get the first token */
-//	token_w = strtok(resolution_to_check[0], "x");
-//	token_h = strtok(NULL, "x");
-//
-//	printf("--Char--\n");
-//	printf( "%s\n", token_w );
-//	printf( "%s\n", token_h );
-//
-//	with = atoi(token_w);
-//	height =atoi(token_h);
-//
-//	printf("--Int--\n");
-//	printf( "%d\n", with );
-//	printf( "%d\n", height );
+	printf("%s\n", resolution_to_check[0]);
+
+	/* get the first token */
+	token_w = strtok(resolution_to_check[0], "x");
+	token_h = strtok(NULL, "x");
+
+	printf("--Char--\n");
+	printf( "%s\n", token_w );
+	printf( "%s\n", token_h );
+
+	with = atoi(token_w);
+	height =atoi(token_h);
+
+	printf("--Int--\n");
+	printf( "%d\n", with );
+	printf( "%d\n", height );
 
 }
 
