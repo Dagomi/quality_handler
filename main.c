@@ -78,7 +78,7 @@ int main ()
 
 	char *h_device = "800";
 	char *w_device = "600";
-	char *qualities_mpd = "480x240_3.23,600x300_5.22,1920x1080_5.22,2048x1024_5.22";
+	char *qualities_mpd = "480x240_3.23,600x300_5.22,1920x1080_5.22,2048x1024_5.22,200x200_1.3";
 	quaility_hander ( h_device,  w_device,  qualities_mpd);
 
     return 0;
