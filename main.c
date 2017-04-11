@@ -2,7 +2,7 @@
 #include <string.h>
 
 
-char* quaility_hander (char *h_device, char *w_device, char *qualities_mpd){
+char *quaility_handler (char *h_device, char *w_device, char *qualities_mpd){
 
 
 	char buf[100]="";
@@ -17,10 +17,13 @@ char* quaility_hander (char *h_device, char *w_device, char *qualities_mpd){
 	//Loop variables
 	int number_qualities = 0;
 	int index_to_check = 0;
+
+    char *string = malloc(5);
+
 	//Print inputs
-	printf("--Inputs--\n");
 	with_device = atoi(w_device);
 	device_height = atoi(h_device);
+	printf("------\n");
 	printf( "%d\n", device_height );
 	printf( "%d\n", with_device );
 	printf( "%s\n", qualities_mpd );
@@ -41,62 +44,46 @@ char* quaility_hander (char *h_device, char *w_device, char *qualities_mpd){
 	}
 	printf ("Number of qualities %d\n", number_qualities);
 	char *bitrate_to_check[number_qualities];
-	//For debug
-	printf("-----\n");
-	printf("Print all qualities:\n");
-	for (i = 0; i < number_qualities; ++i)
-		printf("%s\n", qualities[i]);
-	printf("-----\n");
-
-	printf("Print all Bitrates:\n");
-//	for (i = 0; i < number_qualities; ++i){
-//		resolution_to_check[i] = strtok (qualities[i], "_");
-//		bitrate_to_check[i] = strtok (NULL, "_");
-//		printf( "resolution_to_check: %s\n", bitrate_to_check[i] );
-//
-//	}
-
-	for (i = 0; i < number_qualities; ++i){
-//		resolution_to_check[i] = strtok (qualities[i], "x");
-//		bitrate_to_check[i] = strtok (NULL, "_");
-//		token_w = strtok(resolution_to_check[i], "x");
-//		token_h = strtok(NULL, "x");
+	for (i = 0; i <= number_qualities - 1; ++i){
 
 		token_w = strtok (qualities[i], "x");
 		token_h = strtok(NULL, "_");
 		bitrate_to_check[i] = strtok (NULL, "_");
+		printf("bitrate_to_check to: %s\n", bitrate_to_check[i]);
+
 		with = atoi(token_w);
 		height =atoi(token_h);
 
-		printf("--Int--\n");
-		printf( "With: %d\n", with );
-		printf( "Height: %d\n", height );
-		printf( "Bitrate to check: %s\n", bitrate_to_check[i] );
-
-		printf("If: height_device %d <-> height %d \n", device_height,height );
-		if (device_height >= height){
-			printf("Bitrate to: %s\n", bitrate_to_check[i]);
-			max_bw = bitrate_to_check[i];
-			max_bw = i;
-			printf("The quality IS supported.\n");
-		}else{
-			printf("The quality is NOT supported.\n");
-
+		//Set minimum quality supported
+		if (with > 100){
+			if ( with < with_device){
+				printf("MPD Quality  %d less than %d\n",with, with_device);
+				printf("Bitrate to: %s\n", bitrate_to_check[i]);
+				printf("The quality IS supported.\n");
+			    strcpy(string, bitrate_to_check[i]);
+			    return string;
+			}else{
+				printf("MPD Quality %d highest than %d\n",with, with_device);
+				printf("The quality is NOT supported.\n");
+			}
 		}
+
 	}
-	printf("Set max Bitrate to: %s\n", bitrate_to_check[max_bw]);
-	return bitrate_to_check[max_bw];
+	printf("Return %s \n", bitrate_to_check[number_qualities - 1]);
+    strcpy(string, bitrate_to_check[number_qualities - 1]);
+    return string;
 
 }
 
 int main ()
 {
+	char *w_device = "2561";
+	char *h_device = "300";
+	char *qualities_mpd = "3840x2160_7.0,2560x1440_6.0,1920x1080_5.0,1280x720_4.0,854x480_3.0,640x360_2.0,426x240_1.0";
+//	char *qualities_selected;
+	char *qualities_selected = quaility_handler ( h_device,  w_device,  qualities_mpd);
+	printf("Return %s \n", qualities_selected);
+	free(qualities_selected);
 
-	char *h_device = "800";
-	char *w_device = "600";
-	char *qualities_mpd = "100x150.10,200x250_0.20,300x350_0.30,400x450_0.40";
-	char *qualities_selected;
-	qualities_selected = quaility_hander ( h_device,  w_device,  qualities_mpd);
-	printf("Set max Bitrate to: %s\n", qualities_selected);
     return 0;
 }
